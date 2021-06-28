@@ -78,9 +78,6 @@ function Calculator() {
       <NumPad
         onClick={(value) => handleClick(value)}
       />
-
-      <a>Num1: {num1}</a> <br />
-      <a>Num2: {num2}</a>
     </div >
   );
 }
