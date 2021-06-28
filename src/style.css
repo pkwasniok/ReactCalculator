@@ -1,0 +1,35 @@
+body
+{
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+#root{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+    text-align: center;
+}
+
+.basic-button
+{
+    width: 100%;
+    height: 50px;
+    font-size: 30px;
+    font-family: inherit;
+}
+
+.table
+{
+    width: 100%;
+}
+
+.output-field
+{
+    width: 98%;
+    text-align: right;
+    font-size: 35px;
+    font-family: inherit;
+    color: black;
+}
