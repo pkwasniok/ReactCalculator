@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Button from './Button';
 
 function NumPad(props) {
+
     return (
         <table class={"table"}>
             <tr class={"table-row"}>
@@ -30,7 +31,10 @@ function NumPad(props) {
                 <td class={"table-d"}><Button value={"/"} onClick={(value) => props.onClick(value)} /></td>
             </tr>
             <tr>
-                <td class={"table-d"}><Button value={"C"} onClick={(value) => props.onClick(value)} /></td>
+                <td class={"table-d"}><Button value={"CA"} onClick={(value) => props.onClick(value)} /></td>
+                <td class={"table-d"}><Button value={"MR"} onClick={(value) => props.onClick(value)} /></td>
+                <td class={"table-d"}><Button value={"M+"} onClick={(value) => props.onClick(value)} /></td>
+                <td class={"table-d"}><Button value={"M-"} onClick={(value) => props.onClick(value)} /></td>
             </tr>
         </table>
     );
