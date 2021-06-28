@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 
 import NumPad from './NumPad';
 import OutputField from './OutputField';
@@ -10,8 +10,10 @@ function Calculator() {
 
   const [num1, setNum1] = useState(null);
   const [num2, setNum2] = useState(null);
+  const [memory, setMemory] = useState(0);
 
-  const [changeFlag, setChangeFlag] = useState(false);
+  const [memoryReadFlag, setMemoryReadFlag] = useState(false);
+  const [finalFlag, setFinalFlag] = useState(false);
 
   const [operator, setOperator] = useState("");
 
@@ -34,6 +36,7 @@ function Calculator() {
 
   function handleClick(numpad_key) {
     if (numpad_key == "=") {
+      setFinalFlag(true);
       if (num1 != null && num2 == null) {
         setNum2(parseFloat(value));
 
@@ -45,9 +48,11 @@ function Calculator() {
         setValue(mathOperation(num1, num2, operator));
       }
     }
-    else if (numpad_key == "C") {
+    else if (numpad_key == "CA") {
       setNum1(null);
       setNum2(null);
+      setMemory(0);
+      setMemoryReadFlag(false);
       setValue("");
     }
     else if ((numpad_key == "+" || numpad_key == "-" || numpad_key == "x" || numpad_key == "/") && value != "") {
@@ -64,8 +69,30 @@ function Calculator() {
       setOperator(numpad_key);
       setValue("");
     }
+    else if (numpad_key == "MR") {
+      if (!memoryReadFlag) {
+        setValue(parseFloat(memory));
+        setMemoryReadFlag(true);
+      }
+      else {
+        setMemory(0);
+        setMemoryReadFlag(false);
+      }
+    }
+    else if (numpad_key == "M+" && value != "") {
+      setMemory(memory + parseFloat(value));
+    }
+    else if (numpad_key == "M-" && value != "") {
+      setMemory(memory - parseFloat(value));
+    }
     else {
-      setValue(value + numpad_key);
+      if (finalFlag) {
+        setValue(numpad_key);
+        setFinalFlag(false);
+      }
+      else {
+        setValue(value + numpad_key);
+      }
     }
   }
 
