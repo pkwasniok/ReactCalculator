@@ -8,13 +8,14 @@ import "./style.css";
 function Calculator() {
   const [value, setValue] = useState("");
 
-  const [number, setNumber] = useState(null);
+  const [num1, setNum1] = useState(null);
+  const [num2, setNum2] = useState(null);
 
   const [changeFlag, setChangeFlag] = useState(false);
 
   const [operator, setOperator] = useState("");
 
-  function mathOperation(num1, num2, opeartor) {
+  function mathOperation(num1, num2, operator) {
     switch (operator) {
       case "+":
         return num1 + num2;
@@ -33,33 +34,35 @@ function Calculator() {
 
   function handleClick(numpad_key) {
     if (numpad_key == "=") {
-      if (number != null && value != "") {
-        /*         if (changeFlag) {
-                  var num = number;
-                  setNumber(parseFloat(value));
-                  setValue(num);
-                  setChangeFlag(false);
-                } */
-        setValue(mathOperation(number, parseFloat(value), operator));
+      if (num1 != null && num2 == null) {
+        setNum2(parseFloat(value));
+
+        setNum1(mathOperation(num1, parseFloat(value), operator));
+        setValue(mathOperation(num1, parseFloat(value), operator));
+      }
+      else {
+        setNum1(mathOperation(num1, num2, operator));
+        setValue(mathOperation(num1, num2, operator));
       }
     }
     else if (numpad_key == "C") {
-      setNumber(null);
+      setNum1(null);
+      setNum2(null);
       setValue("");
     }
-    else if (numpad_key == "+" || numpad_key == "-" || numpad_key == "x" || numpad_key == "/") {
+    else if ((numpad_key == "+" || numpad_key == "-" || numpad_key == "x" || numpad_key == "/") && value != "") {
+      if (num1 == null && num2 == null) {
+        setNum1(parseFloat(value));
+      }
+      else if (num1 != null && num2 == null) {
+        setNum1(num1 + parseFloat(value));
+      }
+      else if (num1 != null && num2 != null) {
+        setNum1(mathOperation(num1, num2, numpad_key));
+        setNum2(parseFloat(value));
+      }
       setOperator(numpad_key);
-      //setChangeFlag(true);
-
-      if (number == null) {
-        setNumber(parseFloat(value));
-        setValue("");
-      }
-
-      else if (value != "") {
-        setNumber(mathOperation(number, parseFloat(value), numpad_key));
-        setValue("");
-      }
+      setValue("");
     }
     else {
       setValue(value + numpad_key);
@@ -76,8 +79,9 @@ function Calculator() {
         onClick={(value) => handleClick(value)}
       />
 
-      <a>{number}</a>
-    </div>
+      <a>Num1: {num1}</a> <br />
+      <a>Num2: {num2}</a>
+    </div >
   );
 }
 
